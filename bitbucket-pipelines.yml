@@ -2,7 +2,7 @@ pipelines:
   branches:
     master:
        - step:
-            name: Zipping         
+            name: Compress package into ZIP file   
             script:
               - cd packages
               - sudo apt-get -y install zip unzip
@@ -10,9 +10,9 @@ pipelines:
             artifacts:
               - packages/baluyut-samplepackage.zip
        - step:
-            name: Deployment
+            name: Deployment of compressed package into server
             script:
               - sudo apt-get -y install jq
               - pampalub=$(curl -X POST $TOKENURL -H 'Accept:application/json' -H 'Content-Type:application/x-www-form-urlencoded' -d "grant_type=password&username="$TOROUSR"&password="$TOROPSW"&client_id=TOROMartini&client_secret=TOROMartini" | jq -r .access_token)
               - curl -X POST "$TOROURL/esbapi/packages/upload?stateOnCreate=STARTED&replaceExisting=true" -H  "accept:application/json" -H  "Content-Type:multipart/form-data" -F "file=@packages/baluyut-samplepackage.zip;type=application/x-zip-compressed" -H "Authorization:Bearer $pampalub"
-              
+              	
