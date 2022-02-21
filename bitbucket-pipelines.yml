@@ -12,8 +12,5 @@ pipelines:
        - step:
             name: Deployment
             script:
-              - pasoksusi=$(curl -X POST https://toro282.us-east.toroserver.com/oauth/token -H 'Accept: application/json' -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=password&username=toro.ricardomiguel.baluyut@gmail.com&password=Ad0lfONG_m4lupet&client_id=TOROMartini&client_secret=TOROMartini' | jq -r .access_token)
-			  - curl -X POST "https://toro282.us-east.toroserver.com/esbapi/packages/upload?stateOnCreate=STARTING" -H "accept: application/json" -H  "Content-Type: multipart/form-data" -H "Authorization: Basic dG9yby5yaWNhcmRvbWlndWVsLmJhbHV5dXRAZ21haWwuY29tOitZfXc4PVcuQDZ0Sik=" -F "entryList=List []" Bearer pasoksusi
-			  
-              
-              
+              - pampalub=$(curl -X POST $TOKENURL -H 'Accept:application/json' -H 'Content-Type:application/x-www-form-urlencoded' -d "grant_type=password&username="$TOROUSR"&password="$TOROPSW"&client_id=TOROMartini&client_secret=TOROMartini" | jq -r .access_token)
+              - curl -X POST "$TOROURL/esbapi/packages/upload?stateOnCreate=STARTED&replaceExisting=true" -H  "accept:application/json" -H  "Content-Type:multipart/form-data" -F "file=@baluyut-samplepackage.zip;type=application/x-zip-compressed" -H "Authorization:Bearer $pampalub"
