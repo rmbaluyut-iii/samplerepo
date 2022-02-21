@@ -5,7 +5,7 @@ pipelines:
             name: Zipping         
             script:
               - cd packages
-              - sudo apt-get -y install zip unzip
+              - sudo apt-get -y install zip unzip jq
               - zip -r baluyut-samplepackage.zip baluyut-samplepackage/
             artifacts:
               - packages/baluyut-samplepackage.zip
