@@ -5,12 +5,13 @@ pipelines:
             name: Zipping         
             script:
               - cd packages
-              - sudo apt-get -y install zip unzip jq
+              - sudo apt-get -y install zip unzip
               - zip -r baluyut-samplepackage.zip baluyut-samplepackage/
             artifacts:
               - packages/baluyut-samplepackage.zip
        - step:
             name: Deployment
             script:
+              - sudo apt-get -y install jq
               - pampalub=$(curl -X POST $TOKENURL -H 'Accept:application/json' -H 'Content-Type:application/x-www-form-urlencoded' -d "grant_type=password&username="$TOROUSR"&password="$TOROPSW"&client_id=TOROMartini&client_secret=TOROMartini" | jq -r .access_token)
               - curl -X POST "$TOROURL/esbapi/packages/upload?stateOnCreate=STARTED&replaceExisting=true" -H  "accept:application/json" -H  "Content-Type:multipart/form-data" -F "file=@baluyut-samplepackage.zip;type=application/x-zip-compressed" -H "Authorization:Bearer $pampalub"
