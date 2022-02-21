@@ -1,26 +1,25 @@
-image: node:17.5.0
 pipelines:
   branches:
     master:
        - step:
-            name: A REAL build process!
-            caches:
-              - node
+            name: Zipping         
             script:
-              - npm install
-              - npm run build
+              - cd packages
               - sudo apt-get install zip unzip
-              - zip -r sample_build.zip sample_build
+              - zip -r baluyut-samplepackage.zip baluyut-samplepackage/
             artifacts:
-              - build/**
-              - sample_build.zip
+              - packages/baluyut-samplepackage.zip
+
        - step:
-          name: Deploy sample_build.zip to server via SCP
-          script:
-            - pipe: atlassian/scp-deploy:0.3.3
-              variables:
-                USER: $USER
-                SERVER: $SERVER
-                REMOTE_PATH: '/var/www/deployedstuff/build'
-                LOCAL_PATH: 'node_modules.tar.gz'
-      
+			name: Deployment
+			variables:
+              USER: $USER
+              SERVER: $SERVER
+              TOKENURL: $TOKENURL
+              TOROUSR: $TOROUSR
+              TOROPSW: $TOROSW
+            script:
+              - pasoksusi=$(curl -X POST $TOKENURL -H 'Accept: application/json' -H 'Content-Type: application/x-www-form-urlencoded' -d "grant_type=password&username="$TOROUSR"&password="$TOROPSW"&client_id=TOROMartini&client_secret=TOROMartini" | jq -r .access_token)
+              curl -X POST "https://toro282.us-east.toroserver.com/esbapi/packages/upload?stateOnCreate=STARTING" -H  "accept: application/json" -H  "Content-Type: multipart/form-data" -H  "Authorization: Basic dG9yby5yaWNhcmRvbWlndWVsLmJhbHV5dXRAZ21haWwuY29tOitZfXc4PVcuQDZ0Sik=" -F "entryList=List []" Bearer pasoksusi
+              
+              
