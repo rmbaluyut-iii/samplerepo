@@ -2,7 +2,7 @@ pipelines:
   branches:
     master:
        - step:
-            name: Compress package into ZIP file   
+            name: Compress package into ZIP
             script:
               - cd packages
               - sudo apt-get -y install zip unzip
