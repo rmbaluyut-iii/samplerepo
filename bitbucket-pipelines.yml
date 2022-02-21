@@ -20,6 +20,6 @@ pipelines:
               TOROPSW: $TOROSW
             script:
               - pasoksusi=$(curl -X POST $TOKENURL -H 'Accept: application/json' -H 'Content-Type: application/x-www-form-urlencoded' -d "grant_type=password&username="$TOROUSR"&password="$TOROPSW"&client_id=TOROMartini&client_secret=TOROMartini" | jq -r .access_token)
-			  - curl -X POST "https://toro282.us-east.toroserver.com/esbapi/packages/upload?stateOnCreate=STARTING" -H  "accept: application/json" -H  "Content-Type: multipart/form-data" -H  "Authorization: Basic dG9yby5yaWNhcmRvbWlndWVsLmJhbHV5dXRAZ21haWwuY29tOitZfXc4PVcuQDZ0Sik=" -F "entryList=List []" Bearer pasoksusi
+			  - curl -X POST "$TOROURL/esbapi/packages/upload?stateOnCreate=STARTING" -H  "accept: application/json" -H  "Content-Type: multipart/form-data" -H  "Authorization: Basic dG9yby5yaWNhcmRvbWlndWVsLmJhbHV5dXRAZ21haWwuY29tOitZfXc4PVcuQDZ0Sik=" -F "entryList=List []" Bearer pasoksusi
               
               
