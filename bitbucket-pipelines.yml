@@ -2,7 +2,7 @@ pipelines:
   branches:
     master:
        - step:
-            name: Compress the package into a ZIP file
+            name: Compress the package into a Martini-compatible ZIP file
             script:
               - cd packages
               - sudo apt-get -y install zip unzip
@@ -10,7 +10,7 @@ pipelines:
             artifacts:
               - packages/baluyut-bamboopackage.zip
        - step:
-            name: ZIP package deployment to Martini
+            name: ZIP package deployment to Martini server
             script:
               - sudo apt-get -y install jq
               - pampalub=$(curl -X POST $TOKENURL -H 'Accept:application/json' -H 'Content-Type:application/x-www-form-urlencoded' -d "grant_type=password&username="$TOROUSR"&password="$TOROPSW"&client_id=TOROMartini&client_secret=TOROMartini" | jq -r .access_token)
