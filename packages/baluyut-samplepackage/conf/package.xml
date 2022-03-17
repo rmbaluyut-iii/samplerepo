@@ -1,5 +1,0 @@
-<package stateOnStartup="started" id="baluyut-samplepackage" version="1.0.0-SNAPSHOT" context-path="/baluyut-samplepackage">
-  <package-dependencies/>
-  <startup-services/>
-  <shutdown-services/>
-</package>
