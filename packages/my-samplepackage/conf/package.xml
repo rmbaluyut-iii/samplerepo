@@ -1,5 +1,0 @@
-<package stateOnStartup="started" id="my-samplepackage" version="1.0.0-SNAPSHOT" context-path="/my-samplepackage">
-  <package-dependencies/>
-  <startup-services/>
-  <shutdown-services/>
-</package>
