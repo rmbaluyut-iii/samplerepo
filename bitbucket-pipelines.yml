@@ -2,7 +2,7 @@ pipelines:
   branches:
     master:
        - step:
-            name: Compress the package into a Martini-compatible ZIP file
+            name: Compress the package into a compatible ZIP file
             script:
               - cd packages
               - sudo apt-get -y install zip unzip
